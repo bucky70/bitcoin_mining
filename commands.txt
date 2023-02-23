@@ -1,0 +1,25 @@
+connect remote system erl -name [name]@ip_addrress -setcookie [name]
+compile server, worker and client
+server
+
+
+tart() ->
+    io:fwrite("Begin call to server .~n"),
+    {_,T1} = statistics(runtime),
+    {_,T2} = statistics(wall_clock),
+    U1=T1,
+    U2=T2,
+    Server = spawn(bitCoin_server, findBitCoins,[]),
+    TotalCores=erlang:system_info(logical_processors_available),
+
+if(count==1000)->
+    CPU_time = U1/ 1000,
+    Run_time = U2 / 1000,
+    T3 = CPU_time / Run_time,
+    io:format("CPU time: ~p seconds\n", [CPU_time]),
+    io:format("Real time: ~p seconds\n", [Run_time]),
+    io:format("Ratio is ~p \n", [T3]);
+    %createProcess(Server, 3, 0, 100000000, TotalCores, 0,count+1);
+ true->
+  createProcess(Server, 3, 0, 100000000, TotalCores, 0,count+1)
+end.
